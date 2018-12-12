@@ -39,10 +39,9 @@ public class StateInfo {
     private static SimpleDateFormat DTFORMAT = null;
     { // older Java versions don't know X
         try {
-            DTFORMAT = new SimpleDateFormat("y-M-d'T'H:m:s.SSSSSSSX");
+            DTFORMAT = new SimpleDateFormat("y-M-d H:m:s.SSS X");
         } catch(Throwable t) {
             DTFORMAT=null;
-            System.out.println(t.toString());
             t.printStackTrace();
         }
     }
@@ -187,7 +186,8 @@ public class StateInfo {
             // lastMoveOn = OffsetDateTime.parse( json.getString("LastMoveOn") );
             try {
                 Date d=null;
-                if( DTFORMAT != null )
+                String DateString = json.getString("LastMoveOn");
+                if( !DateString.isEmpty() && DTFORMAT != null )
                     d = DTFORMAT.parse( json.getString("LastMoveOn") );
                 lastMoveOn = d;
                 if(true&&DEBUG)
